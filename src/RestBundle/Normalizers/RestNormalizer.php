@@ -120,7 +120,7 @@ class RestNormalizer extends AbstractNormalizer
             $ignored = in_array($attribute, $this->ignoredAttributes);
 
             if ($allowed && !$ignored) {
-                $setter = 'set'.ucfirst($attribute);
+                $setter = 'set' . ucfirst($attribute);
 
                 if (in_array($setter, $classMethods) && !$reflectionClass->getMethod($setter)->isStatic()) {
                     $object->$setter($value);
@@ -148,7 +148,7 @@ class RestNormalizer extends AbstractNormalizer
     }
 
     /**
-     * Checks if the given class has any get{Property} method.
+     * Checks if the given class has any get{Property} method and is not an ignored one.
      *
      * @param string $class
      *
@@ -159,7 +159,7 @@ class RestNormalizer extends AbstractNormalizer
         $class = new \ReflectionClass($class);
         $methods = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
         foreach ($methods as $method) {
-            if ($this->isGetMethod($method)) {
+            if ($this->isGetMethod($method) && !$this->isIgnoredMethod($method)) {
                 return true;
             }
         }
@@ -186,7 +186,19 @@ class RestNormalizer extends AbstractNormalizer
             )
         ;
 
-        /* Ver si no tiene la anotación IGNORE */
+        return $isGetMethod;
+    }
+
+    /**
+     * Checks if a method has the 'ignoreSerializer' attribute
+     *
+     * @param \ReflectionMethod $method the method to check
+     *
+     * @return bool whether the method is ignored or not
+     */
+    private function isIgnoredMethod(\ReflectionMethod $method)
+    {
+        $isIgnoredMethod = false;
         $annotationReader = new AnnotationReader();
 
         $methodAnnotations = $annotationReader->getMethodAnnotations($method);
@@ -195,12 +207,12 @@ class RestNormalizer extends AbstractNormalizer
             if ($annotation instanceof RestAnnotation
                 && $annotation->getValue() === 'ignoreSerializer'
             ) {
-                $isGetMethod = false;
+                $isIgnoredMethod = true;
                 break;
             }
         }
 
-        return $isGetMethod;
+        return $isIgnoredMethod;
     }
 
     /** 

@@ -14,17 +14,17 @@ use \RestBundle\Entity\RestEntity;
 
 class RestController extends Controller
 {
-    /*
+    /**
      * @var Doctrine\ORM\EntityManager
      */
     protected $_entityManager;
 
-    /*
+    /**
      * @var Symfony\Component\Serializer\Serializer
      */
     protected $_serializer;
 
-    /*
+    /**
      * @var Symfony\Component\Validator\Validator\Validator
      */
     protected $_entityValidator;
@@ -61,7 +61,7 @@ class RestController extends Controller
             );
         } catch(NotFoundHttpException $e) {
             $response = new JsonResponse(
-                $e->getMessage(),
+                json_decode($e->getMessage()),
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -91,7 +91,7 @@ class RestController extends Controller
     }
 
     /**
-     * Serialize an object using the given notation
+     * Serializes an object to JSON
      *
      * @param stdClass|array $object
      *
@@ -111,6 +111,7 @@ class RestController extends Controller
      * @param RestEntity $entity
      *
      * @return array
+     * @throws NotFoundHttpException
      */
     protected function _validateEntity($entity)
     {
@@ -128,7 +129,9 @@ class RestController extends Controller
             }
         } else {
             throw new NotFoundHttpException(
-                'Entity not found'
+                $this->render(
+                    'RestBundle:Rest:not-found.html.twig'
+                )->getContent()
             );
         }
 

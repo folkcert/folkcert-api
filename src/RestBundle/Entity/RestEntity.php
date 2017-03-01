@@ -27,7 +27,7 @@ class RestEntity
                     $this->$key = new $newClass;
                     $this->$key->exchangeArray($value);
                     
-                } else if ($key === 'fecha' && is_string($value)) {
+                } else if ($key === 'date' && is_string($value)) {
                     $this->$key = new \DateTime($value);
                 } else {
                     $this->$key = $value;
