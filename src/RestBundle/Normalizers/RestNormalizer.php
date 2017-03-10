@@ -1,14 +1,4 @@
 <?php
-
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace RestBundle\Normalizers;
 
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
@@ -42,7 +32,7 @@ use RestBundle\Annotations\RestAnnotation;
  */
 class RestNormalizer extends AbstractNormalizer
 {
-    private $_dateFields = array('fecha', 'created', 'createdAt', 'date');
+    private $_dateFields = array('date');
     /**
      * {@inheritdoc}
      *

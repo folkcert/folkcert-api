@@ -1,6 +1,6 @@
 <?php
-
 namespace RestBundle\Entity;
+
 use Doctrine\Common\Annotations\AnnotationReader;
 
 class RestEntity
@@ -26,7 +26,6 @@ class RestEntity
                     $newClass = $namespace . $propertyAnnotations[0]->targetEntity;
                     $this->$key = new $newClass;
                     $this->$key->exchangeArray($value);
-                    
                 } else if ($key === 'date' && is_string($value)) {
                     $this->$key = new \DateTime($value);
                 } else {

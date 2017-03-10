@@ -1,16 +1,17 @@
 <?php
 namespace RestBundle\Controller;
 
+use RestBundle\Entity\RestEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use RestBundle\Normalizers\RestNormalizer;
+use \RestBundle\Normalizers\RestNormalizer;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use \RestBundle\Entity\RestEntity;
 
 class RestController extends Controller
 {
@@ -29,7 +30,7 @@ class RestController extends Controller
      */
     protected $_entityValidator;
 
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $id)
     {
         $this->_entityManager = $this->getDoctrine()->getManager();
         $this->_serializer = $this->_createSerializer();
@@ -39,7 +40,7 @@ class RestController extends Controller
         try {
             switch ($request->getMethod()) {
                 case 'GET':
-                    $response = $this->handleGet();
+                    $response = $this->handleGet($id);
                 break;
                    
                 case 'POST':
@@ -48,6 +49,10 @@ class RestController extends Controller
 
                 case 'PUT':
                     $response = $this->handlePut($request);
+                break;
+
+                case 'DELETE':
+                    $response = $this->handleDelete($request);
                 break;
 
                 default:

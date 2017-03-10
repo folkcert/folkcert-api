@@ -1,0 +1,3 @@
+concert:
+    path:     /concert/{id}
+    defaults: { _controller: AppBundle:Concert:index, id: null }
