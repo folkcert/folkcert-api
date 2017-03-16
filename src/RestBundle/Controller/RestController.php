@@ -30,11 +30,17 @@ class RestController extends Controller
      */
     protected $_entityValidator;
 
+    /**
+     * @var Symfony\Component\HttpFoundation\Request
+     */
+    protected $_request;
+
     public function indexAction(Request $request, $id)
     {
         $this->_entityManager = $this->getDoctrine()->getManager();
         $this->_serializer = $this->_createSerializer();
         $this->_entityValidator = $this->get('validator');
+        $this->_request = $request;
 
         $response = null;
         try {
@@ -44,15 +50,15 @@ class RestController extends Controller
                 break;
                    
                 case 'POST':
-                    $response = $this->handlePost($request);
+                    $response = $this->handlePost();
                 break;
 
                 case 'PUT':
-                    $response = $this->handlePut($request);
+                    $response = $this->handlePut();
                 break;
 
                 case 'DELETE':
-                    $response = $this->handleDelete($request);
+                    $response = $this->handleDelete();
                 break;
 
                 default:

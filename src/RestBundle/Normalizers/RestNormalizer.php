@@ -54,7 +54,7 @@ class RestNormalizer extends AbstractNormalizer
 
         $attributes = array();
         foreach ($reflectionMethods as $method) {
-            if ($this->isGetMethod($method)) {
+            if ($this->isGetMethod($method) && !$this->isIgnoredMethod($method)) {
                 $attributeName = lcfirst(substr($method->name, 0 === strpos($method->name, 'is') ? 2 : 3));
                 if (in_array($attributeName, $this->ignoredAttributes)) {
                     continue;
@@ -149,11 +149,10 @@ class RestNormalizer extends AbstractNormalizer
         $class = new \ReflectionClass($class);
         $methods = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
         foreach ($methods as $method) {
-            if ($this->isGetMethod($method) && !$this->isIgnoredMethod($method)) {
+            if ($this->isGetMethod($method) && $this->isIgnoredMethod($method) === false) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -167,7 +166,6 @@ class RestNormalizer extends AbstractNormalizer
     private function isGetMethod(\ReflectionMethod $method)
     {
         $methodLength = strlen($method->name);
-
         $isGetMethod = !$method->isStatic() &&
             (
                 ((0 === strpos($method->name, 'get') && 3 < $methodLength) ||
@@ -175,7 +173,6 @@ class RestNormalizer extends AbstractNormalizer
                 0 === $method->getNumberOfRequiredParameters()
             )
         ;
-
         return $isGetMethod;
     }
 
@@ -192,7 +189,6 @@ class RestNormalizer extends AbstractNormalizer
         $annotationReader = new AnnotationReader();
 
         $methodAnnotations = $annotationReader->getMethodAnnotations($method);
-
         foreach ($methodAnnotations as $key => $annotation) {
             if ($annotation instanceof RestAnnotation
                 && $annotation->getValue() === 'ignoreSerializer'
@@ -201,7 +197,6 @@ class RestNormalizer extends AbstractNormalizer
                 break;
             }
         }
-
         return $isIgnoredMethod;
     }
 

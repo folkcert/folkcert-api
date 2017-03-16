@@ -11,10 +11,21 @@ class ConcertController extends RestController
 {
     public function handleGet($id)
     {
-        die($id);
-        $concerts = $this->_entityManager->getRepository('AppBundle:Concert')->findAll();
-        $response = new JsonResponse($this->_serializeObject($concerts));
-        
+        $result = null;
+        $response = null;
+
+        if (empty($id)) {
+            $result = $this->_entityManager->getRepository('AppBundle:Concert')->findAll();
+        } else {
+            $result = $this->_entityManager->getRepository('AppBundle:Concert')->find($id);
+        }
+
+        if (!empty($result)) {
+            $response = new JsonResponse($this->_serializeObject($result));
+        } else {
+            /* Throw new exception */
+        }
+
         return $response;
     }
 }

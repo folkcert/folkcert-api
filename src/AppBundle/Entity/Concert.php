@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Concert
@@ -48,6 +49,31 @@ class Concert
      * @ORM\Column(name="location", type="string", length=100)
      */
     private $location;
+
+    /**
+     * @var Genre
+     *
+     * @ORM\ManyToOne(targetEntity="Genre")
+     * @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
+     */
+    private $genre;
+
+    /**
+     * @var Artist
+     *
+     * @ORM\ManyToOne(targetEntity="Artist")
+     * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
+     */
+    private $artist;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="concert")
+     */
+    private $links;
+
+    public function __construct() {
+        $this->links = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -154,5 +180,76 @@ class Concert
     {
         return $this->location;
     }
-}
 
+    /**
+     * Set Genre
+     *
+     * @param Genre $genre
+     *
+     * @return Concert
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Get Genre
+     *
+     * @return Genre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * Set Artist
+     *
+     * @param Artist $artist
+     *
+     * @return Concert
+     */
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get Artist
+     *
+     * @return Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * Add a link to the collection
+     *
+     * @param Link $link
+     *
+     * @return Concert
+     */
+    public function addLink($link)
+    {
+        $this->links[] = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get Links
+     *
+     * @return ArrayCollection
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+}
