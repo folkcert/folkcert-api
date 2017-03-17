@@ -141,9 +141,11 @@ class SearchScoresService
     }
 
     /**
-     * Check if the string is not in the list of irrelevant words
-     * @param $string string
-     * @return boolean
+     * Returns the QueryBuilder object with the query to execute
+     * @param $entity string
+     * @param $query string
+     * @param $keywordsArray array
+     * @return QueryBuilder
      */
     private function _getQueryBuilder($entity, $query, $keywordsArray)
     {
