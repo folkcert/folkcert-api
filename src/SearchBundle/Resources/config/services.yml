@@ -1,0 +1,7 @@
+parameters:
+  search-scores-service.class: SearchBundle\Services\SearchScoresService
+
+services:
+  search_scores:
+    class: '%search-scores-service.class%'
+    arguments: ['@doctrine.orm.entity_manager', '@kernel']
