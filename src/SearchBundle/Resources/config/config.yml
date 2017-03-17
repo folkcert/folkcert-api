@@ -1,0 +1,29 @@
+config:
+  queryStringLengthLimit: 200
+  keywordMinLength: 3
+  keywordsArrayLimit: 20
+  minRelevanceResult: 1
+entities:
+  AppBundle:Concert:
+    scores:
+      full:
+        e.name: 10
+        e.description: 9
+        a.name: 8
+        e.location: 6
+      partial:
+        e.name: 5
+        e.description: 4
+        a.name: 3
+        e.location: 2
+    join:
+      a: e.artist
+      g: e.genre
+
+  AppBundle:Artist:
+    scores:
+      full:
+          e.name: 2
+      partial:
+          e.name: 1
+    join:
