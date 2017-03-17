@@ -34,6 +34,13 @@ class Artist extends RestEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="related_names", type="string", length=255, nullable=true)
+     */
+    protected $relatedNames;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="picture", type="string", length=100)
      */
     protected $picture;
@@ -95,5 +102,28 @@ class Artist extends RestEntity
     {
         return $this->picture;
     }
-}
 
+    /**
+     * Set relatedNames
+     *
+     * @param string $relatedNames
+     *
+     * @return Artist
+     */
+    public function setRelatedNames($relatedNames)
+    {
+        $this->relatedNames = $relatedNames;
+
+        return $this;
+    }
+
+    /**
+     * Get relatedNames
+     *
+     * @return string
+     */
+    public function getRelatedNames()
+    {
+        return $this->relatedNames;
+    }
+}

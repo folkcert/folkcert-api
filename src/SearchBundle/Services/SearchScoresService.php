@@ -55,6 +55,9 @@ class SearchScoresService
         /* Limit the query */
         $query = $this->_limitQueryLength($query);
 
+        /* Lowercase the query */
+        $query = strtolower($query);
+
         /* Convert the query string into an array of keyword */
         $keywordsArray = $this->_getKeywordsArray($query);
 
@@ -114,6 +117,9 @@ class SearchScoresService
         /* Remove irrelevant words */
         $keywordsArray = array_filter($keywordsArray, array($this, '_isRelevantWord'));
 
+        /* Lowercase keywords */
+        $keywordsArray = array_map('strtolower', $keywordsArray);
+
         /* Limit the array size to N words */
         $keywordsArray = array_slice($keywordsArray, 0, $this->_getConfigParameter('keywordsArrayLimit'));
 
@@ -169,13 +175,14 @@ class SearchScoresService
         
         /* Adds the full coincidence scores */
         foreach ($scoresArray['full'] as $attr => $score) {
-            $scoresQueryArray[] = "(CASE WHEN {$attr} LIKE '%{$query}%' THEN {$score} ELSE 0 END)";
+            $scoresQueryArray[] = "(CASE WHEN LOWER({$attr}) LIKE '%{$query}%' THEN {$score} ELSE 0 END)";
         }
 
         /* Add the partial coincidence scores */
         foreach ($keywordsArray as $index => $keyword) {
+            $keyword = strtolower($keyword);
             foreach ($scoresArray['partial'] as $attr => $score) {
-                $scoresQueryArray[] = "(CASE WHEN {$attr} LIKE '%{$keyword}%' THEN {$score} ELSE 0 END)";
+                $scoresQueryArray[] = "(CASE WHEN LOWER({$attr}) LIKE '%{$keyword}%' THEN {$score} ELSE 0 END)";
             }
         }
 

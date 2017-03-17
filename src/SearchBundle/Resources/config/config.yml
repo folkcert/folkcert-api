@@ -23,7 +23,9 @@ entities:
   AppBundle:Artist:
     scores:
       full:
-          e.name: 2
+          e.name: 5
+          e.relatedNames: 4
       partial:
-          e.name: 1
+          e.name: 3
+          e.relatedNames: 2
     join:
