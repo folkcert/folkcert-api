@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use RestBundle\Entity\RestEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="genre")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenreRepository")
  */
-class Genre
+class Genre extends RestEntity
 {
     /**
      * @var int
@@ -19,21 +20,21 @@ class Genre
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=100)
      */
-    private $logo;
+    protected $logo;
 
     /**
      * Get id

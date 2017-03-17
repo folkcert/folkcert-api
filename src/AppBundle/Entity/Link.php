@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use RestBundle\Entity\RestEntity;
 use Doctrine\ORM\Mapping as ORM;
 use RestBundle\Annotations\RestAnnotation;
 
@@ -11,7 +12,7 @@ use RestBundle\Annotations\RestAnnotation;
  * @ORM\Table(name="link")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LinkRepository")
  */
-class Link
+class Link extends RestEntity
 {
     /**
      * @var int
@@ -20,14 +21,14 @@ class Link
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="linkCode", type="string", length=100)
      */
-    private $linkCode;
+    protected $linkCode;
 
     /**
      * @var Concert
@@ -35,7 +36,7 @@ class Link
      * @ORM\ManyToOne(targetEntity="Concert")
      * @ORM\JoinColumn(name="concert_id", referencedColumnName="id")
      */
-    private $concert;
+    protected $concert;
 
     /**
      * @var LinkType
@@ -43,7 +44,7 @@ class Link
      * @ORM\ManyToOne(targetEntity="LinkType")
      * @ORM\JoinColumn(name="link_type_id", referencedColumnName="id")
      */
-    private $linkType;
+    protected $linkType;
 
     /**
      * Get id

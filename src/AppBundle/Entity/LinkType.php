@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use RestBundle\Entity\RestEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="link_type")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LinkTypeRepository")
  */
-class LinkType
+class LinkType extends RestEntity
 {
     /**
      * @var int
@@ -19,28 +20,28 @@ class LinkType
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, unique=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=32)
      */
-    private $logo;
+    protected $logo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="baseUrl", type="string", length=100)
      */
-    private $baseUrl;
+    protected $baseUrl;
 
     /**
      * Get id
