@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use RestBundle\Entity\RestEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Artist
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="artist")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArtistRepository")
  */
-class Artist
+class Artist extends RestEntity
 {
     /**
      * @var int
@@ -19,21 +21,22 @@ class Artist
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="picture", type="string", length=100)
      */
-    private $picture;
+    protected $picture;
 
     /**
      * Get id

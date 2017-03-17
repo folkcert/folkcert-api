@@ -45,20 +45,20 @@ class RestController extends Controller
         $response = null;
         try {
             switch ($request->getMethod()) {
-                case 'GET':
+                case Request::METHOD_GET:
                     $response = $this->handleGet($id);
                 break;
                    
-                case 'POST':
+                case Request::METHOD_POST:
                     $response = $this->handlePost();
                 break;
 
-                case 'PUT':
+                case Request::METHOD_PUT:
                     $response = $this->handlePut();
                 break;
 
-                case 'DELETE':
-                    $response = $this->handleDelete();
+                case Request::METHOD_DELETE:
+                    $response = $this->handleDelete($id);
                 break;
 
                 default:

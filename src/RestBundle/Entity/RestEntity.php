@@ -20,7 +20,15 @@ class RestEntity
                 $reflectionProperty = new \ReflectionProperty(get_class($this), $key);
                 $propertyAnnotations = $annotationReader->getPropertyAnnotations($reflectionProperty);
 
-                if (property_exists(get_class($propertyAnnotations[0]), 'targetEntity')) {
+                if (property_exists(get_class($propertyAnnotations[0]), 'mappedBy')) {
+                    foreach ($value as $index => $item) {
+                        $namespace = $this->_getNameSpace();
+                        $newClass = $namespace . $propertyAnnotations[0]->targetEntity;
+                        $object = new $newClass;
+                        $object->exchangeArray($item);
+                        $this->$key->add($object);
+                    }
+                } else if (property_exists(get_class($propertyAnnotations[0]), 'targetEntity')) {
                     $namespace = $this->_getNameSpace();
 
                     $newClass = $namespace . $propertyAnnotations[0]->targetEntity;

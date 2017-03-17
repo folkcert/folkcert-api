@@ -2,8 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use RestBundle\Entity\RestEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Concert
@@ -11,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="concert")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ConcertRepository")
  */
-class Concert
+class Concert extends RestEntity
 {
     /**
      * @var int
@@ -20,35 +22,39 @@ class Concert
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @Assert\NotBlank()
      */
-    private $description;
+    protected $description;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+     * @Assert\NotBlank()
      */
-    private $date;
+    protected $date;
 
     /**
      * @var string
      *
      * @ORM\Column(name="location", type="string", length=100)
+     * @Assert\NotBlank()
      */
-    private $location;
+    protected $location;
 
     /**
      * @var Genre
@@ -56,7 +62,7 @@ class Concert
      * @ORM\ManyToOne(targetEntity="Genre")
      * @ORM\JoinColumn(name="genre_id", referencedColumnName="id")
      */
-    private $genre;
+    protected $genre;
 
     /**
      * @var Artist
@@ -64,12 +70,12 @@ class Concert
      * @ORM\ManyToOne(targetEntity="Artist")
      * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
-    private $artist;
+    protected $artist;
 
     /**
-     * @ORM\OneToMany(targetEntity="Link", mappedBy="concert")
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="concert", cascade={"persist", "remove"})
      */
-    private $links;
+    protected $links;
 
     public function __construct() {
         $this->links = new ArrayCollection();
