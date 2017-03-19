@@ -182,14 +182,17 @@ class SearchScoresService
         foreach ($keywordsArray as $index => $keyword) {
             $keyword = strtolower($keyword);
             foreach ($scoresArray['partial'] as $attr => $score) {
-                $scoresQueryArray[] = "(CASE WHEN LOWER({$attr}) LIKE '%{$keyword}%' THEN {$score} ELSE 0 END)";
+                $scoresQueryArray[] =
+                    '(CASE WHEN ' . $qb->expr()->like($qb->expr()->lower($attr), $qb->expr()->literal('%' . $keyword . '%'))
+                    . ' THEN ' . $qb->expr()->literal($score) . ' ELSE 0 END)';
             }
         }
 
         $scoreString = implode(' + ', $scoresQueryArray);
-
         $qb->addSelect($scoreString . ' as relevance');
+
         $qb->where($qb->expr()->gte($scoreString, $this->_getConfigParameter('minRelevanceResult')));
+        $qb->orderBy('relevance', 'DESC');
 
         return $qb;
     }

@@ -25,7 +25,11 @@ class ConcertController extends RestController
         if (!empty($result)) {
             $response = new JsonResponse($this->_serializeObject($result));
         } else {
-            /* Throw new exception */
+            throw new NotFoundHttpException(
+                $this->render(
+                    'RestBundle:Rest:not-found.html.twig'
+                )->getContent()
+            );
         }
 
         return $response;
@@ -42,11 +46,12 @@ class ConcertController extends RestController
         /* Will throw an exception if not valid */
         $this->_validateEntity($concert);
 
-        /* References */
+        /* Concert Genre */
         $concert->setGenre(
             $this->_entityManager->getReference('AppBundle:Genre', $concert->getGenre()->getId())
         );
 
+        /* Concert Artist */
         $concert->setArtist(
             $this->_entityManager->getReference('AppBundle:Artist', $concert->getArtist()->getId())
         );
