@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use RestBundle\Controller\RestController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use RestBundle\Normalizers\RestNormalizer;
-use AppBundle\Entity\Link;
 
 class SearchController extends RestController
 {

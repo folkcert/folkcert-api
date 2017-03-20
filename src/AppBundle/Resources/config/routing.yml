@@ -2,6 +2,10 @@ concert:
     path:     /concert/{id}
     defaults: { _controller: AppBundle:Concert:index, id: null }
 
+artist:
+    path:     /artist/{id}
+    defaults: { _controller: AppBundle:Artist:index, id: null }
+
 search:
     path:     /search
     defaults: { _controller: AppBundle:Search:index, id: null }

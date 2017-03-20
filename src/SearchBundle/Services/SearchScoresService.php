@@ -58,7 +58,7 @@ class SearchScoresService
         /* Lowercase the query */
         $query = strtolower($query);
 
-        /* Convert the query string into an array of keyword */
+        /* Convert the query string into an array of keywords */
         $keywordsArray = $this->_getKeywordsArray($query);
 
         /* Get query builder */
