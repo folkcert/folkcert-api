@@ -30,6 +30,14 @@ class CredentialsService
         $this->_tokens = $userTokens;
     }
 
+    /**
+     * Check if the user with this token, can execute this method in this resource
+     *
+     * @param string $token
+     * @param string $resource
+     * @param string $method
+     * @return boolean
+     */
     public function canAccessResource($token, $resource, $method)
     {
         $canAccess = false;
