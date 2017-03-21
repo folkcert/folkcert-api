@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use \RestBundle\Normalizers\RestNormalizer;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class RestController extends Controller
 {
@@ -42,9 +43,23 @@ class RestController extends Controller
         $this->_entityValidator = $this->get('validator');
         $this->_request = $request;
 
+        /* Current Route */
+        $route = $this->_request->get('_route');
+
+        /* Current Method */
+        $method = $this->_request->getMethod();
+
+        /* Current User */
+        $userToken = $this->_request->headers->get('x-user-token');
+        $userToken = 'notTheRealOne';
+
         $response = null;
         try {
-            switch ($request->getMethod()) {
+
+            /* Will throw an exception if not authorized */
+            $this->_validateCredentials($userToken, $route, $method);
+
+            switch ($method) {
                 case Request::METHOD_GET:
                     $response = $this->handleGet($id);
                 break;
@@ -65,15 +80,20 @@ class RestController extends Controller
                     # code...
                 break;
             }
-        } catch(BadRequestHttpException $e) {
+        } catch (BadRequestHttpException $e) {
             $response = new JsonResponse(
                 json_decode($e->getMessage()),
                 Response::HTTP_BAD_REQUEST
             );
-        } catch(NotFoundHttpException $e) {
+        } catch (NotFoundHttpException $e) {
             $response = new JsonResponse(
                 json_decode($e->getMessage()),
                 Response::HTTP_NOT_FOUND
+            );
+        } catch (UnauthorizedHttpException $e) {
+            $response = new JsonResponse(
+                json_decode($e->getMessage()),
+                Response::HTTP_UNAUTHORIZED
             );
         }
 
@@ -147,5 +167,35 @@ class RestController extends Controller
         }
 
         return $errors;
+    }
+
+    /**
+     * Validates if the user has access to the resource
+     *
+     * @param string $userToken
+     * @param string $resource
+     * @param string $method
+     *
+     * @return boolean
+     * @throws UnauthorizedHttpException
+     */
+    protected function _validateCredentials($userToken, $resource, $method)
+    {
+        $canAccessResource = $this->get('credentials_service')->canAccessResource(
+            $userToken,
+            $resource,
+            $method
+        );
+
+        if ($canAccessResource === false) {
+            throw new UnauthorizedHttpException(
+                '',
+                $this->render(
+                    'RestBundle:Rest:unauthorized.html.twig'
+                )->getContent()
+            );
+        }
+
+        return $canAccessResource;
     }
 }

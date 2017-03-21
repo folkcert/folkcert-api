@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new RestBundle\RestBundle(),
             new SearchBundle\SearchBundle(),
+            new CredentialsBundle\CredentialsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
