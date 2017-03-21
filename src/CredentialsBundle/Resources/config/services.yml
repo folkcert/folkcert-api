@@ -4,4 +4,4 @@ parameters:
 services:
   credentials_service:
     class: '%credentials-service.class%'
-    arguments: ['@kernel', '%folkcer_user_tokens%']
+    arguments: ['@kernel', '%folkcert_user_tokens%']
