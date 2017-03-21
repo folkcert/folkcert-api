@@ -6,6 +6,14 @@ artist:
     path:     /artist/{id}
     defaults: { _controller: AppBundle:Artist:index, id: null }
 
+genre:
+    path:     /genre
+    defaults: { _controller: AppBundle:Genre:index, id: null }
+
+linkType:
+    path:     /link-type
+    defaults: { _controller: AppBundle:LinkType:index, id: null }
+
 search:
     path:     /search
     defaults: { _controller: AppBundle:Search:index, id: null }

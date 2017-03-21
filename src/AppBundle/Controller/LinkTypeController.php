@@ -7,9 +7,9 @@ use RestBundle\Controller\RestController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use RestBundle\Normalizers\RestNormalizer;
-use AppBundle\Entity\Artist;
+use AppBundle\Entity\LinkType;
 
-class ArtistController extends RestController
+class LinkTypeController extends RestController
 {
 	public function handleGet($id)
     {
@@ -17,9 +17,9 @@ class ArtistController extends RestController
         $response = null;
 
         if (empty($id)) {
-            $result = $this->_entityManager->getRepository('AppBundle:Artist')->findAll();
+            $result = $this->_entityManager->getRepository('AppBundle:LinkType')->findAll();
         } else {
-            $result = $this->_entityManager->getRepository('AppBundle:Artist')->find($id);
+            $result = $this->_entityManager->getRepository('AppBundle:LinkType')->find($id);
         }
 
         if (!empty($result)) {
@@ -39,31 +39,31 @@ class ArtistController extends RestController
     {
         $jsonContent = json_decode($this->_request->getContent(), true);
 
-        $artist = new Artist();
+        $linkType = new LinkType();
 
-        $artist->exchangeArray($jsonContent);
+        $linkType->exchangeArray($jsonContent);
 
         /* Will throw an exception if not valid */
-        $this->_validateEntity($artist);
+        $this->_validateEntity($linkType);
 
-        $this->_entityManager->persist($artist);
+        $this->_entityManager->persist($linkType);
         $this->_entityManager->flush();
 
-        $response = new JsonResponse($this->_serializeObject($artist));
+        $response = new JsonResponse($this->_serializeObject($linkType));
         return $response;
     }
 
     public function handleDelete($id)
     {
-        $artist = $this->_entityManager->getRepository('AppBundle:Artist')->find($id);
+        $linkType = $this->_entityManager->getRepository('AppBundle:LinkType')->find($id);
 
         /* Will throw an exception if not valid */
-        $this->_validateEntity($artist);
+        $this->_validateEntity($linkType);
 
-        $this->_entityManager->remove($artist);
+        $this->_entityManager->remove($linkType);
         $this->_entityManager->flush();
 
-        $response = new JsonResponse($this->_serializeObject($artist));
+        $response = new JsonResponse($this->_serializeObject($linkType));
 
         return $response;
     }

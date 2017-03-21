@@ -7,9 +7,9 @@ use RestBundle\Controller\RestController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use RestBundle\Normalizers\RestNormalizer;
-use AppBundle\Entity\Artist;
+use AppBundle\Entity\Genre;
 
-class ArtistController extends RestController
+class GenreController extends RestController
 {
 	public function handleGet($id)
     {
@@ -17,9 +17,9 @@ class ArtistController extends RestController
         $response = null;
 
         if (empty($id)) {
-            $result = $this->_entityManager->getRepository('AppBundle:Artist')->findAll();
+            $result = $this->_entityManager->getRepository('AppBundle:Genre')->findAll();
         } else {
-            $result = $this->_entityManager->getRepository('AppBundle:Artist')->find($id);
+            $result = $this->_entityManager->getRepository('AppBundle:Genre')->find($id);
         }
 
         if (!empty($result)) {
@@ -39,31 +39,31 @@ class ArtistController extends RestController
     {
         $jsonContent = json_decode($this->_request->getContent(), true);
 
-        $artist = new Artist();
+        $genre = new Genre();
 
-        $artist->exchangeArray($jsonContent);
+        $genre->exchangeArray($jsonContent);
 
         /* Will throw an exception if not valid */
-        $this->_validateEntity($artist);
+        $this->_validateEntity($genre);
 
-        $this->_entityManager->persist($artist);
+        $this->_entityManager->persist($genre);
         $this->_entityManager->flush();
 
-        $response = new JsonResponse($this->_serializeObject($artist));
+        $response = new JsonResponse($this->_serializeObject($genre));
         return $response;
     }
 
     public function handleDelete($id)
     {
-        $artist = $this->_entityManager->getRepository('AppBundle:Artist')->find($id);
+        $genre = $this->_entityManager->getRepository('AppBundle:Genre')->find($id);
 
         /* Will throw an exception if not valid */
-        $this->_validateEntity($artist);
+        $this->_validateEntity($genre);
 
-        $this->_entityManager->remove($artist);
+        $this->_entityManager->remove($genre);
         $this->_entityManager->flush();
 
-        $response = new JsonResponse($this->_serializeObject($artist));
+        $response = new JsonResponse($this->_serializeObject($genre));
 
         return $response;
     }
