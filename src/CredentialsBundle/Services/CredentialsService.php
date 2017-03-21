@@ -5,7 +5,7 @@ namespace CredentialsBundle\Services;
 use Symfony\Component\Yaml\Parser;
 
 /**
- * Search
+ * CredentialsService
  */
 class CredentialsService
 {
@@ -28,7 +28,6 @@ class CredentialsService
     {
         $this->_kernel = $kernel;
         $this->_tokens = $userTokens;
-        
     }
 
     public function canAccessResource($token, $resource, $method)

@@ -80,17 +80,17 @@ class RestController extends Controller
                     # code...
                 break;
             }
-        } catch(BadRequestHttpException $e) {
+        } catch (BadRequestHttpException $e) {
             $response = new JsonResponse(
                 json_decode($e->getMessage()),
                 Response::HTTP_BAD_REQUEST
             );
-        } catch(NotFoundHttpException $e) {
+        } catch (NotFoundHttpException $e) {
             $response = new JsonResponse(
                 json_decode($e->getMessage()),
                 Response::HTTP_NOT_FOUND
             );
-        } catch(UnauthorizedHttpException $e) {
+        } catch (UnauthorizedHttpException $e) {
             $response = new JsonResponse(
                 json_decode($e->getMessage()),
                 Response::HTTP_UNAUTHORIZED
