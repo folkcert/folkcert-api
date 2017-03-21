@@ -21,4 +21,4 @@ parameters:
 
     folkcer_user_tokens:
         folkcertReadOnly: f796fde1bae170ee9dcecb1c3034a62e17383c01d0776d825158763c7ff325f2
-        fokcertReadWrite: notTheRealOne
+        folkcertReadWrite: notTheRealOne

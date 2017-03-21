@@ -5,7 +5,7 @@ users:
       artist: ['GET']
       concert: ['GET']
       search: ['GET']
-  fokcertReadWrite:
+  folkcertReadWrite:
     token: replaceMe
     resources:
       artist: ['GET', 'POST', 'PUT', 'DELETE']
