@@ -1,0 +1,7 @@
+parameters:
+  credentials-service.class: CredentialsBundle\Services\CredentialsService
+
+services:
+  credentials_service:
+    class: '%credentials-service.class%'
+    arguments: ['@kernel', '%folkcer_user_tokens%']
