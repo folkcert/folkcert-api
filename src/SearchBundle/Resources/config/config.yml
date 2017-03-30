@@ -11,11 +11,13 @@ entities:
         e.description: 9
         a.name: 8
         e.location: 6
+        a.relatedNames: 2
       partial:
         e.name: 5
         e.description: 4
         a.name: 3
         e.location: 2
+        a.relatedNames: 1
     join:
       a: e.artist
       g: e.genre

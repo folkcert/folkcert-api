@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LinkType extends RestEntity
 {
+    const LINK_TYPE_YOUTUBE = 1;
+    const LINK_TYPE_VIMEO = 2;
+    const LINK_TYPE_DAILYMOTION = 3;
     /**
      * @var int
      *

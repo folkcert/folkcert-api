@@ -1,0 +1,6 @@
+parameters:
+  link-thumbnail-service.class: AppBundle\Services\LinkThumbnailService
+
+services:
+  link_thumbnail_service:
+    class: '%link-thumbnail-service.class%'
