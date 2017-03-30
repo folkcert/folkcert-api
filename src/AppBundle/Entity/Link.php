@@ -31,6 +31,13 @@ class Link extends RestEntity
     protected $linkCode;
 
     /**
+     * @var string
+     *
+      * @ORM\Column(name="thumbnail", type="string", length=255, nullable=true)
+     */
+    protected $thumbnail;
+
+    /**
      * @var Concert
      *
      * @ORM\ManyToOne(targetEntity="Concert")
@@ -78,6 +85,30 @@ class Link extends RestEntity
     public function getLinkCode()
     {
         return $this->linkCode;
+    }
+
+    /**
+     * Set thumbnail
+     *
+     * @param string $thumbnail
+     *
+     * @return Link
+     */
+    public function setThumbnail($thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    /**
+     * Get thumbnail
+     *
+     * @return string
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
     }
 
     /**

@@ -37,6 +37,7 @@ class ConcertController extends RestController
 
     public function handlePost()
     {
+        $linkThumbnailService = $this->get('link_thumbnail_service');
         $jsonContent = json_decode($this->_request->getContent(), true);
 
         $concert = new Concert();
@@ -62,6 +63,10 @@ class ConcertController extends RestController
             $link->setLinkType(
                 $this->_entityManager->getReference('AppBundle:LinkType', $link->getLinkType()->getId())
             );
+
+            /* Set link Thumbnail */
+            $linkThumnbail = $linkThumbnailService->getThumbnail($link->getLinkType()->getId(), $link->getLinkCode());
+            $link->setThumbnail($linkThumnbail);
         }
 
         $this->_entityManager->persist($concert);
