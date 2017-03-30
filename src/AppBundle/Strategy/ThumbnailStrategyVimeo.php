@@ -22,7 +22,6 @@ class ThumbnailStrategyVimeo implements ThumbnailStrategyInterface
 
         $response = curl_exec($ch);
 
-        // If using JSON...
         $data = json_decode($response);
 
         return $data[0]->thumbnail_large;

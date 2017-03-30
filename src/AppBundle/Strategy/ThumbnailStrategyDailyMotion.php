@@ -23,11 +23,8 @@ class ThumbnailStrategyDailyMotion implements ThumbnailStrategyInterface
 
         $response = curl_exec($ch);
 
-        // If using JSON...
         $data = json_decode($response);
 
         return $data->thumbnail_large_url;
     }
 }
-
-

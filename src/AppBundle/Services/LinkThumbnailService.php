@@ -12,11 +12,6 @@ use AppBundle\Strategy\ThumbnailStrategyDailyMotion;
  */
 class LinkThumbnailService
 {
-    public function __construct()
-    {
-
-    }
-
     public function getThumbnail($linkType, $videoId)
     {
         $thumbnailStrategy = null;
