@@ -2,14 +2,14 @@ users:
   folkcertReadOnly:
     token: replaceMe
     resources:
-      artist: ['GET']
-      concert: ['GET']
-      search: ['GET']
+      artist: ['GET', 'OPTIONS']
+      concert: ['GET', 'OPTIONS']
+      search: ['GET', 'OPTIONS']
   folkcertReadWrite:
     token: replaceMe
     resources:
-      artist: ['GET', 'POST', 'PUT', 'DELETE']
-      concert: ['GET', 'POST', 'PUT', 'DELETE']
-      search: ['GET', 'POST', 'PUT', 'DELETE']
-      linkType: ['GET', 'POST', 'PUT', 'DELETE']
-      genre: ['GET', 'POST', 'PUT', 'DELETE']
+      artist: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      concert: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      search: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      linkType: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      genre: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']

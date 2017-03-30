@@ -76,6 +76,10 @@ class RestController extends Controller
                     $response = $this->handleDelete($id);
                 break;
 
+                case Request::METHOD_OPTIONS:
+                    $response = new Response('', 200);
+                break;
+
                 default:
                     # code...
                 break;
