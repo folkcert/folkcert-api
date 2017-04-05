@@ -29,7 +29,7 @@ class SearchScoresService
      * @var Array
      */
     private $_irrelevantWords = array(
-        'los', 'las', 'sus', 'con',
+        'los', 'las', 'sus', 'con', 'vivo', 'live'
     );
 
     public function __construct(EntityManager $entityManager, $kernel)
