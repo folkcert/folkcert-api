@@ -192,6 +192,7 @@ class SearchScoresService
         $qb->addSelect($scoreString . ' as relevance');
 
         $qb->where($qb->expr()->gte($scoreString, $this->_getConfigParameter('minRelevanceResult')));
+        $qb->setMaxResults($this->_getConfigParameter('maxResults'));
         $qb->orderBy('relevance', 'DESC');
 
         return $qb;

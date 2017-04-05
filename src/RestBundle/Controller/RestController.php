@@ -190,7 +190,7 @@ class RestController extends Controller
             $method
         );
 
-        if ($canAccessResource === false) {
+        if ($canAccessResource === false && $method !== Request::METHOD_OPTIONS) {
             throw new UnauthorizedHttpException(
                 '',
                 $this->render(

@@ -3,6 +3,7 @@ config:
   keywordMinLength: 3
   keywordsArrayLimit: 20
   minRelevanceResult: 1
+  maxResults: 8
 entities:
   AppBundle:Concert:
     scores:
