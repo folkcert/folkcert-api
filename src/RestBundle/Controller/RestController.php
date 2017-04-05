@@ -51,7 +51,6 @@ class RestController extends Controller
 
         /* Current User */
         $userToken = $this->_request->headers->get('x-user-token');
-        $userToken = 'notTheRealOne';
 
         $response = null;
         try {

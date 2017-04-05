@@ -16,8 +16,10 @@ class ConcertController extends RestController
         $result = null;
         $response = null;
 
+        $filters = $this->_request->query->get('filters');
+
         if (empty($id)) {
-            $result = $this->_entityManager->getRepository('AppBundle:Concert')->findAll();
+            $result = $this->_entityManager->getRepository('AppBundle:Concert')->getAll($filters);
         } else {
             $result = $this->_entityManager->getRepository('AppBundle:Concert')->find($id);
         }

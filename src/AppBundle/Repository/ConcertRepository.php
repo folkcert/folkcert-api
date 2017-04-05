@@ -10,4 +10,26 @@ namespace AppBundle\Repository;
  */
 class ConcertRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll($filters)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if (!empty($filters['artist'])) {
+            $qb->andWhere(
+                $qb->expr()->eq('c.artist', ':artist')
+            )
+            ->setParameter('artist', $filters['artist']);
+        }
+
+        if (!empty($filters['genre'])) {
+            $qb->andWhere(
+                $qb->expr()->eq('c.genre', ':genre')
+            )
+            ->setParameter('genre', $filters['genre']);
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }
