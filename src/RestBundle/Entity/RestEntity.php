@@ -21,6 +21,7 @@ class RestEntity
                 $propertyAnnotations = $annotationReader->getPropertyAnnotations($reflectionProperty);
 
                 if (property_exists(get_class($propertyAnnotations[0]), 'mappedBy')) {
+                    $this->$key->clear();
                     foreach ($value as $index => $item) {
                         $namespace = $this->_getNameSpace();
                         $newClass = $namespace . $propertyAnnotations[0]->targetEntity;

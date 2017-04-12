@@ -39,11 +39,58 @@ class ConcertController extends RestController
 
     public function handlePost()
     {
-        $linkThumbnailService = $this->get('link_thumbnail_service');
         $jsonContent = json_decode($this->_request->getContent(), true);
 
         $concert = new Concert();
 
+        $this->_populateConcertFields($concert, $jsonContent);
+
+        $this->_entityManager->persist($concert);
+        $this->_entityManager->flush();
+
+        $response = new JsonResponse($this->_serializeObject($concert));
+        return $response;
+    }
+
+    public function handlePut()
+    {
+        $jsonContent = json_decode($this->_request->getContent(), true);
+
+        $concert = $this->_entityManager->getRepository('AppBundle:Concert')->find($jsonContent['id']);
+
+        $this->_populateConcertFields($concert, $jsonContent);
+
+        $this->_entityManager->persist($concert);
+        $this->_entityManager->flush();
+
+        $response = new JsonResponse($this->_serializeObject($concert));
+        return $response;
+    }
+
+    public function handleDelete($id)
+    {
+        $concert = $this->_entityManager->getRepository('AppBundle:Concert')->find($id);
+
+        /* Will throw an exception if not valid */
+        $this->_validateEntity($concert);
+
+        $this->_entityManager->remove($concert);
+        $this->_entityManager->flush();
+
+        $response = new JsonResponse($this->_serializeObject($concert));
+
+        return $response;
+    }
+
+    /**
+     * Populates a concert Entity with the jsonContent and its fields
+     * @param Concert $concert
+     * @param array $jsonContent
+     * @return Concert
+     */
+    private function _populateConcertFields(Concert $concert, $jsonContent)
+    {
+        $linkThumbnailService = $this->get('link_thumbnail_service');
         $concert->exchangeArray($jsonContent);
 
         /* Will throw an exception if not valid */
@@ -71,25 +118,6 @@ class ConcertController extends RestController
             $link->setThumbnail($linkThumnbail);
         }
 
-        $this->_entityManager->persist($concert);
-        $this->_entityManager->flush();
-
-        $response = new JsonResponse($this->_serializeObject($concert));
-        return $response;
-    }
-
-    public function handleDelete($id)
-    {
-        $concert = $this->_entityManager->getRepository('AppBundle:Concert')->find($id);
-
-        /* Will throw an exception if not valid */
-        $this->_validateEntity($concert);
-
-        $this->_entityManager->remove($concert);
-        $this->_entityManager->flush();
-
-        $response = new JsonResponse($this->_serializeObject($concert));
-
-        return $response;
+        return $concert;
     }
 }

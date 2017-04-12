@@ -41,10 +41,22 @@ class ArtistController extends RestController
 
         $artist = new Artist();
 
-        $artist->exchangeArray($jsonContent);
+        $this->_populateArtistFields($artist, $jsonContent);
 
-        /* Will throw an exception if not valid */
-        $this->_validateEntity($artist);
+        $this->_entityManager->persist($artist);
+        $this->_entityManager->flush();
+
+        $response = new JsonResponse($this->_serializeObject($artist));
+        return $response;
+    }
+
+    public function handlePut()
+    {
+        $jsonContent = json_decode($this->_request->getContent(), true);
+
+        $artist = $this->_entityManager->getRepository('AppBundle:Artist')->find($jsonContent['id']);
+
+        $this->_populateArtistFields($artist, $jsonContent);
 
         $this->_entityManager->persist($artist);
         $this->_entityManager->flush();
@@ -66,5 +78,21 @@ class ArtistController extends RestController
         $response = new JsonResponse($this->_serializeObject($artist));
 
         return $response;
+    }
+
+    /**
+     * Populates a Artist Entity with the jsonContent and its fields
+     * @param Artist $artist
+     * @param array $jsonContent
+     * @return Artist
+     */
+    private function _populateArtistFields(Artist $artist, $jsonContent)
+    {
+        $artist->exchangeArray($jsonContent);
+
+        /* Will throw an exception if not valid */
+        $this->_validateEntity($artist);
+
+        return $artist;
     }
 }
