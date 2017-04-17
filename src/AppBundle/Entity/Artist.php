@@ -41,7 +41,7 @@ class Artist extends RestEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="string", length=100)
+     * @ORM\Column(name="picture", type="string", length=150)
      */
     protected $picture;
 
