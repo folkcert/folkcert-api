@@ -20,6 +20,11 @@ class SearchController extends RestController
 
         $artists = $this->get('search_scores')->search('AppBundle:Artist', $keyword);
 
+        /* Filter unactive concerts */
+        $concerts = array_filter($concerts, function($concert) {
+            return $concert['entry']->getActive() === true;
+        });
+
         $result = array(
             'concerts' => array(
                 'count' => sizeof($concerts),

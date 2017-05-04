@@ -77,6 +77,13 @@ class Concert extends RestEntity
      */
     protected $links;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", options={"default": true})
+     */
+    protected $active;
+
     public function __construct() {
         $this->links = new ArrayCollection();
     }
@@ -137,6 +144,30 @@ class Concert extends RestEntity
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Concert
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**
