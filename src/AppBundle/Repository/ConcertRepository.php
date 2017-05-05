@@ -12,7 +12,8 @@ class ConcertRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAll($filters)
     {
-        $qb = $this->createQueryBuilder('c');
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.active = true');
 
         if (!empty($filters['artist'])) {
             $qb->andWhere(
