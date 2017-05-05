@@ -25,6 +25,8 @@ class SearchController extends RestController
             return $concert['entry']->getActive() === true;
         });
 
+        $concerts = array_values($concerts);
+
         $result = array(
             'concerts' => array(
                 'count' => sizeof($concerts),
